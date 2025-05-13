@@ -36,3 +36,154 @@ TC-P04,FR-7,Positive,Multi-Factor Authentication,"1. Navigate to login page
 4. User is fully authenticated and redirected to dashboard","Username/Email: ""mfa.user@example.com""
 Password: ""MfaUser@123""
 OTP: ""123456""",High,Not Run
+TC-P05,FR-2,Positive,Different User Roles,"1. Log in as administrator
+2. Verify admin dashboard access
+3. Log out
+4. Log in as regular user
+5. Verify appropriate access level","1. Admin user gets access to admin features
+2. Regular user gets access to standard features
+3. Each user sees appropriate dashboard for their role","Admin credentials: ""admin@system.com"" / ""AdminPass!123""
+Regular user: ""user@example.com"" / ""UserPass!123""",Medium,Not Run
+TC-P06,NFR-3,Positive,Form Validation,"1. Enter valid email in username/email field
+2. Enter valid password in password field
+3. Observe form validation as typing occurs","1. Form validates input in real time
+2. No validation errors are shown for valid inputs","Username/Email: ""valid.format@example.com""
+Password: ""ValidPassword123!""",Low,Not Run
+TC-P07,NFR-2,Positive,Performance,"1. Navigate to login page
+2. Measure page load time
+3. Enter valid credentials
+4. Click the ""Login"" button
+5. Measure authentication response time","1. Login page loads in under 2 seconds
+2. Authentication completes within 3 seconds of submission","Username/Email: ""perf.test@example.com""
+Password: ""PerfTest123!""
+Measured load time: < 2 seconds
+Authentication time: < 3 seconds",Medium,Not Run
+TC-P08,NFR-4,Positive,Cross-Browser Compatibility,"1. Navigate to login page on Chrome
+2. Verify all UI elements display correctly
+3. Perform login with valid credentials
+4. Repeat on Firefox, Safari, and Edge","1. Login page renders correctly on all tested browsers
+2. Functionality works consistently across browsers
+3. No visual or functional discrepancies","Username/Email: ""browser.test@example.com""
+Password: ""BrowserTest123!""
+Browsers: Chrome, Firefox, Safari, Edge",Medium,Not Run
+TC-P09,NFR-5,Positive,Accessibility,"1. Navigate to login page
+2. Test keyboard navigation (Tab, Enter, etc.)
+3. Test with screen reader
+4. Check color contrast ratios
+5. Verify form labels and ARIA attributes","1. All functionality accessible via keyboard
+2. Screen readers announce all elements correctly
+3. Color contrast meets WCAG 2.1 AA standards
+4. All form elements have proper labels and ARIA attributes",N/A,Medium,Not Run
+TC-P10,FR-1,Positive,UI Components,"1. Navigate to login page
+2. Verify all required components are present
+3. Verify password masking works correctly","1. Username/email field is present
+2. Password field is present and masks input
+3. Login button is visible
+4. Forgot Password link is available
+5. Remember Me option is present",N/A,High,Not Run
+TC-N01,FR-3,Negative,Invalid Username,"1. Navigate to login page
+2. Enter non-existent username/email
+3. Enter any password
+4. Click the ""Login"" button","1. Authentication fails
+2. Error message indicates invalid username/email
+3. User remains on login page","Username/Email: ""nonexistent@nowhere.com""
+Password: ""anypassword""",High,Not Run
+TC-N02,FR-3,Negative,Invalid Password,"1. Navigate to login page
+2. Enter valid username/email
+3. Enter incorrect password
+4. Click the ""Login"" button","1. Authentication fails
+2. Error message indicates incorrect password
+3. User remains on login page","Username/Email: ""valid.user@example.com""
+Password: ""WrongPassword123!""",High,Not Run
+TC-N03,FR-3,Negative,Empty Fields,"1. Navigate to login page
+2. Leave username/email field empty
+3. Leave password field empty
+4. Click the ""Login"" button","1. Form submission is prevented
+2. Error messages indicate required fields
+3. Both fields are highlighted as errors","Username/Email: """" (empty)
+Password: """" (empty)",Medium,Not Run
+TC-N04,FR-6,Negative,Account Lockout,"1. Navigate to login page
+2. Enter valid username but incorrect password
+3. Repeat login attempt with incorrect password 5 times
+4. Try to login with correct credentials","1. After 5 failed attempts, account is locked
+2. Error message indicates account is locked
+3. Further login attempts are rejected even with correct credentials","Username/Email: ""lockout.test@example.com""
+Incorrect Password: ""WrongPass123""
+Correct Password: ""CorrectPass123!""",High,Not Run
+TC-N05,FR-7,Negative,Invalid MFA Code,"1. Navigate to login page
+2. Enter valid credentials for MFA-enabled account
+3. Click the ""Login"" button
+4. Enter invalid OTP code
+5. Submit OTP verification","1. Initial credentials are validated
+2. MFA prompt is displayed
+3. Invalid OTP is rejected
+4. Error message indicates invalid code
+5. User is prompted to try again","Username/Email: ""mfa.user@example.com""
+Password: ""MfaUser@123""
+Invalid OTP: ""111111""",High,Not Run
+TC-N06,NFR-1,Negative,SQL Injection,"1. Navigate to login page
+2. Enter SQL injection code in username field
+3. Enter any password
+4. Click the ""Login"" button","1. SQL injection is prevented
+2. Authentication fails
+3. No database error is exposed
+4. Generic error message is displayed","Username/Email: ""admin' OR '1'='1--""
+Password: ""anypassword""",Critical,Not Run
+TC-N07,NFR-1,Negative,XSS Attack,"1. Navigate to login page
+2. Enter JavaScript code in username field
+3. Enter any password
+4. Click the ""Login"" button","1. XSS attack is prevented
+2. Script is not executed
+3. Input is properly sanitized","Username/Email: ""<script>alert('XSS')</script>""
+Password: ""anypassword""",Critical,Not Run
+TC-N08,NFR-1,Negative,CSRF Protection,"1. Create a forged login request from external site
+2. Attempt to submit login credentials via the forged request","1. CSRF attack is prevented
+2. Login form validates origin of request
+3. Authentication fails for cross-site requests","HTML form with auto-submit to target application's login endpoint",Critical,Not Run
+TC-N09,NFR-1,Negative,Brute Force Protection,"1. Set up automated script to try multiple password combinations
+2. Execute script against a known username
+3. Monitor response times and lockout behavior","1. System throttles login attempts after multiple failures
+2. Account is locked after threshold is reached
+3. IP address may be temporarily blocked","Username/Email: ""brute.force@example.com""
+Multiple password combinations",Critical,Not Run
+TC-N10,FR-3,Negative,Special Characters,"1. Navigate to login page
+2. Enter username with special characters
+3. Enter password with special characters
+4. Click the ""Login"" button","1. Special characters are handled properly
+2. No unexpected errors occur
+3. Input is properly sanitized","Username/Email: ""special!@#$%^&*()_+{}[]|\\:;'<>,.?/""
+Password: ""P@$$w0rd!@#""",Medium,Not Run
+TC-N11,NFR-2,Negative,Performance Under Load,"1. Simulate 1000+ concurrent login attempts
+2. Monitor system response time and error rate","1. System handles concurrent requests without crashing
+2. Response time may increase but remains under acceptable threshold
+3. No security bypasses occur under load","Multiple valid and invalid credentials
+Load testing tools",High,Not Run
+TC-N12,NFR-3,Negative,Mobile Responsiveness,"1. Access login page on various mobile devices
+2. Test form usability on small screens
+3. Verify all UI elements are accessible","1. Login form adapts to different screen sizes
+2. All elements remain functional on mobile
+3. Touch interaction works properly","Devices: Various smartphones and tablets with different screen sizes",Medium,Not Run
+TC-N13,FR-4,Negative,Invalid Recovery Email,"1. Navigate to login page
+2. Click ""Forgot Password"" link
+3. Enter unregistered email address
+4. Submit password recovery request","1. System checks if email exists in database
+2. Error message indicates email not found
+3. No reset instructions are sent","Email: ""unregistered@example.com""",Medium,Not Run
+TC-N14,NFR-1,Negative,Session Timeout,"1. Log in with valid credentials
+2. Remain inactive for session timeout period
+3. Attempt to perform action requiring authentication","1. Session expires after inactivity period
+2. User is redirected to login page
+3. Action is not performed
+4. User must re-authenticate","Username/Email: ""timeout.test@example.com""
+Password: ""TimeoutTest123!""",Medium,Not Run
+TC-N15,NFR-1,Negative,Password Policy Enforcement,"1. Navigate to registration or password reset
+2. Try to set password that doesn't meet requirements:
+   - Too short
+   - No special characters
+   - No numbers
+   - Common dictionary word","1. System rejects weak passwords
+2. Error message explains password requirements
+3. Strong password is required","Weak passwords:
+""password""
+""12345678""
+""username""",High,Not Run
