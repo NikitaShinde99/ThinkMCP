@@ -1,0 +1,38 @@
+Test Case ID,Requirement,Test Type,Test Category,Test Steps,Expected Result,Test Data,Priority,Status
+TC-P01,FR-2,Positive,Authentication,"1. Navigate to login page
+2. Enter valid username/email
+3. Enter valid password
+4. Click the ""Login"" button","1. System validates credentials
+2. User is successfully authenticated
+3. User is redirected to dashboard
+4. Session is established","Username/Email: ""valid.user@example.com""
+Password: ""Valid@Pass123""",High,Not Run
+TC-P02,"FR-2, FR-5",Positive,Remember Me,"1. Navigate to login page
+2. Enter valid username/email
+3. Enter valid password
+4. Check ""Remember Me"" checkbox
+5. Click the ""Login"" button
+6. Log out
+7. Return to login page after browser restart","1. User is successfully authenticated
+2. ""Remember Me"" preference is saved
+3. Upon returning to login page, credentials are pre-filled
+4. User remains logged in across browser sessions","Username/Email: ""remember.user@example.com""
+Password: ""Remember@123""
+Remember Me: Checked",Medium,Not Run
+TC-P03,FR-4,Positive,Password Recovery,"1. Navigate to login page
+2. Click ""Forgot Password"" link
+3. Enter registered email address
+4. Submit password recovery request","1. Password reset request is processed
+2. Reset instructions are sent to email
+3. User is notified that instructions have been sent","Email: ""recovery.user@example.com""",Medium,Not Run
+TC-P04,FR-7,Positive,Multi-Factor Authentication,"1. Navigate to login page
+2. Enter valid credentials for MFA-enabled account
+3. Click the ""Login"" button
+4. Receive OTP via chosen method
+5. Enter valid OTP code
+6. Submit OTP verification","1. Initial credentials are validated
+2. MFA prompt is displayed
+3. Valid OTP is accepted
+4. User is fully authenticated and redirected to dashboard","Username/Email: ""mfa.user@example.com""
+Password: ""MfaUser@123""
+OTP: ""123456""",High,Not Run
